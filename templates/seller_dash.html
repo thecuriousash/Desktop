@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mb-12">
+    <h1 class="brand text-4xl font-black text-white">Seller Studio.</h1>
+    <p class="text-slate-500 text-sm mt-1">Manage your listings and track your campus sales.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+    <div class="glass p-6 rounded-3xl">
+        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Live Listings</p>
+        <p class="text-3xl font-bold text-white">{{ items|length }}</p>
+    </div>
+    <div class="glass p-6 rounded-3xl">
+        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Estimated Earnings</p>
+        <p class="text-3xl font-bold text-emerald-400">₹4,500</p>
+    </div>
+    <a href="/market" class="glass p-6 rounded-3xl flex items-center justify-center border-dashed border-indigo-500/30 hover:bg-indigo-500/10 transition-all">
+        <span class="text-indigo-400 font-bold">+ New Listing</span>
+    </a>
+</div>
+
+<div class="glass rounded-3xl overflow-hidden">
+    <table class="w-full text-left text-sm">
+        <thead class="bg-white/5 text-slate-500 uppercase text-[10px] tracking-widest">
+            <tr><th class="px-8 py-4">Item</th><th class="px-8 py-4">Price</th><th class="px-8 py-4">Status</th><th class="px-8 py-4">Action</th></tr>
+        </thead>
+        <tbody class="divide-y divide-white/5">
+            {% for item in items %}
+            <tr class="hover:bg-white/5 transition-colors">
+                <td class="px-8 py-5 text-white font-semibold">{{ item['title'] }}</td>
+                <td class="px-8 py-5 text-indigo-400">₹{{ item['price'] }}</td>
+                <td class="px-8 py-5">
+                    {% if item['is_sold'] %}<span class="text-red-400">Sold</span>{% else %}<span class="text-emerald-400">Active</span>{% endif %}
+                </td>
+                <td class="px-8 py-5">
+                    <a href="/market/sold/{{ item['id'] }}" class="text-xs text-slate-500 hover:text-white">Mark Sold</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto py-24 animate-page">
+    <div class="text-center mb-10">
+        <h1 class="brand-logo text-3xl text-white tracking-tighter uppercase italic">Student Protocol</h1>
+        <p class="text-slate-600 text-[10px] mt-2 font-black uppercase tracking-[0.3em]">Identity Required for Network Access</p>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="mb-6">
+        {% for category, message in messages %}
+        <div class="px-5 py-3 rounded-2xl text-xs font-bold {% if category == 'error' %}bg-red-500/10 text-red-400 border border-red-500/20{% else %}bg-emerald-500/10 text-emerald-400 border border-emerald-500/20{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <form action="/login" method="POST" class="glass-card p-10 rounded-[40px] border-indigo-500/20 space-y-6">
+        <div>
+            <label class="text-[10px] font-black text-indigo-400 uppercase tracking-widest ml-4">Campus Email</label>
+            <input type="email" name="email" required placeholder="you@campus.edu"
+                   class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-indigo-500 transition-all mt-2">
+        </div>
+        <button type="submit" class="w-full bg-white text-black font-black py-5 rounded-2xl hover:bg-indigo-600 hover:text-white transition-all uppercase tracking-[0.2em] text-xs shadow-xl shadow-white/5">
+            Enter Network
+        </button>
+    </form>
+
+    <div class="text-center mt-8">
+        <a href="/" class="text-[8px] font-black text-slate-800 uppercase tracking-[0.8em] hover:text-white transition-all duration-500">
+            &larr; Return to Terminal
+        </a>
+    </div>
+</div>
+{% endblock %}

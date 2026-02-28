@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-[80vh] flex flex-col items-center justify-center animate-page">
+    
+    <div class="text-center mb-24">
+        <h2 class="brand-logo text-6xl font-black text-white italic tracking-tighter mb-6">
+            Define your objective<span class="text-indigo-500">.</span>
+        </h2>
+        <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.8em] opacity-50">
+            System Authorization Required
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-7xl px-4">
+        
+        <a href="/auth/buyer" class="group relative">
+            <div class="glass-card h-full p-12 rounded-[45px] text-center border-white/5 group-hover:border-indigo-500/50 transition-all duration-500 relative z-10">
+                <div class="text-4xl mb-8 grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">🛒</div>
+                <h3 class="brand-logo text-3xl text-white mb-3 italic tracking-tight">Buyer</h3>
+                <p class="text-slate-500 text-[11px] font-light leading-relaxed px-4">
+                    Source verified campus assets and essential gear.
+                </p>
+                <div class="mt-10 text-[8px] font-black text-indigo-400 uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Initialize Sourcing &rarr;
+                </div>
+            </div>
+            <div class="absolute inset-0 bg-indigo-500/10 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        </a>
+
+        <a href="/auth/seller" class="group relative">
+            <div class="glass-card h-full p-12 rounded-[45px] text-center border-white/5 group-hover:border-purple-500/50 transition-all duration-500 relative z-10">
+                <div class="text-4xl mb-8 grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">💎</div>
+                <h3 class="brand-logo text-3xl text-white mb-3 italic tracking-tight">Seller</h3>
+                <p class="text-slate-500 text-[11px] font-light leading-relaxed px-4">
+                    Launch your brand and circulate student provisions.
+                </p>
+                <div class="mt-10 text-[8px] font-black text-purple-400 uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Initialize Provisioning &rarr;
+                </div>
+            </div>
+            <div class="absolute inset-0 bg-purple-500/10 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        </a>
+
+        <a href="/lost" class="group relative">
+            <div class="glass-card h-full p-12 rounded-[45px] text-center border-white/5 group-hover:border-amber-500/50 transition-all duration-500 relative z-10">
+                <div class="text-4xl mb-8 grayscale group-hover:grayscale-0 transition-all duration-500 transform group-hover:scale-110">🔍</div>
+                <h3 class="brand-logo text-3xl text-white mb-3 italic tracking-tight">Lost & Found</h3>
+                <p class="text-slate-500 text-[11px] font-light leading-relaxed px-4">
+                    Trace missing assets or restore found items to the network.
+                </p>
+                <div class="mt-10 text-[8px] font-black text-amber-500 uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity">
+                    Initialize Recovery &rarr;
+                </div>
+            </div>
+            <div class="absolute inset-0 bg-amber-500/10 blur-[100px] opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        </a>
+
+    </div>
+
+    <div class="mt-24">
+        <a href="/" class="text-[8px] font-black text-slate-800 uppercase tracking-[0.8em] hover:text-white transition-all duration-500">
+            &larr; Abort System Entry
+        </a>
+    </div>
+</div>
+{% endblock %}
