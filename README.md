@@ -1,84 +1,84 @@
-# HUSTL. | Campus Marketplace Protocol 💎
+# Hustl. — Campus Mini-Economy
 
-HUSTL is a high-trust, closed-loop marketplace ecosystem designed for university campuses. It features a dual-protocol entry system for Buyers and Sellers, governed by an administrator verification layer to ensure safety and authenticity in campus trades.
+A Flask-based campus marketplace for students to **buy/sell items** and report **lost & found** assets, with admin-mediated identity verification.
 
-![Hustl Interface](/static/images/default.png)
+## Features
 
-## 🚀 Live Demo
+- **Buyer / Seller roles** with identity verification
+- **Market Exchange** — list, browse, and contact sellers via WhatsApp
+- **Lost & Found** — report and track missing items
+- **Admin Panel** — verify student IDs, manage listings, delete items
+- **Seller Dashboard** — manage your own listings, mark items as sold
 
-**URL:** [https://desktop-n3ar.onrender.com](https://desktop-n3ar.onrender.com)
+## Quick Start
 
----
-
-## ☁️ How to Redeploy on Render (Step-by-Step)
-
-If you are seeing a `404 Not Found` or the old version of the site on your Render link, it means the latest code hasn't finished deploying yet. Follow these steps to ensure your app deploys the new refactored version perfectly:
-
-### Step 1: Push Latest Code to GitHub
-Ensure all your local changes are pushed to your GitHub repository:
 ```bash
-git add .
-git commit -m "update"
-git push origin main
+# Install dependencies
+pip install -r requirements.txt
+
+# Run locally
+python3 app.py
 ```
 
-### Step 2: Configure Render Dashboard
-1. Log in to your [Render Dashboard](https://dashboard.render.com/).
-2. Click on your **Web Service** (e.g., `desktop`).
-3. On the left sidebar, click **Environment**.
-4. You **MUST** add these three Environment Variables (click "Add Environment Variable"):
-   - `SECRET_KEY` = (Type any random string of characters, e.g., `super_secret_hustl_key_2026`)
-   - `ADMIN_USERNAME` = `admin` (Or whatever you want your admin username to be)
-   - `ADMIN_PASSWORD` = `changeme` (Or a secure password for your admin panel)
-5. Click **Save Changes**.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
-### Step 3: Trigger a Manual Deploy
-1. Still on the Render dashboard for your web service, click **Settings** on the left.
-2. Scroll down to **Build & Deploy**.
-3. Ensure your settings match this:
-   - **Repository:** `https://github.com/thecuriousash/Desktop`
-   - **Branch:** `main`
-   - **Build Command:** `pip install -r requirements.txt`
-   - **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT` (Render should auto-detect this via the `Procfile`, but put it here if asked).
-4. Scroll to the top right of the page, click the **Manual Deploy** button, and select **Clear build cache & deploy**.
+**Default admin login:** `admin` / `changeme` (change via env vars in production!)
 
-### Step 4: Wait for the Build
-Click on the **Logs** tab on the left. You will see text scrolling as Render installs Python and your requirements. 
-Wait until you see the green text: **"Your service is live 🎉"**. 
+## Environment Variables
 
-Once you see that, refresh your `desktop-n3ar.onrender.com` link, and the new `/auth/buyer` routes will work perfectly!
+Copy `.env.example` to `.env` and configure:
 
----
+| Variable | Required | Default | Description |
+|---|---|---|---|
+| `SECRET_KEY` | ✅ | `hustl_dev_fallback_key` | Flask session secret |
+| `ADMIN_USERNAME` | ✅ | `admin` | Admin login username |
+| `ADMIN_PASSWORD` | ✅ | `changeme` | Admin login password |
+| `MAX_CONTENT_LENGTH` | — | `4194304` (4 MB) | Max upload size |
+| `ALLOWED_EXTENSIONS` | — | `png,jpg,jpeg,gif` | Allowed file types |
+| `SESSION_COOKIE_SECURE` | — | `False` | Set `True` for HTTPS |
 
-## 🛠️ System Architecture
+## Deploying to Render
 
-The platform is built on a "Vetting-First" logic:
-1. **The Vault:** New sellers must submit legal credentials and ID proof.
-2. **The Mediator:** Administrators review submissions via a secure oversight dashboard.
-3. **The Exchange:** Verified users gain "Direct Entry" to post assets. Buyers can browse and view items securely.
+1. Create a **Web Service** on [Render](https://render.com)
+2. Set the environment variables above in the Render dashboard
+3. Build command: `pip install -r requirements.txt`
+4. Start command: (uses `Procfile` automatically)
+   ```
+   gunicorn app:app --bind 0.0.0.0:$PORT --workers 3
+   ```
 
-## 💻 Tech Stack
-- **Backend:** Python / Flask
-- **Database:** SQLite3 (Row Factory Pattern)
-- **Frontend:** HTML5 / Tailwind CSS (Glassmorphism UI)
-- **Deployment:** Render (Gunicorn)
+> **Note:** SQLite works for small-scale use. For production scale, migrate to PostgreSQL. Uploads are stored locally — use S3/Cloudflare R2 for persistence on ephemeral hosting.
 
-## 📂 Project Structure
-```text
+## Project Structure
+
+```
 hustl/
-├── app.py              # Core Logic & Routing 
-├── hustl.db            # SQLite Database (Auto-generated)
-├── requirements.txt    # Python dependencies
-├── Procfile            # Render web server configuration
-├── .env.example        # Environment variable template
+├── app.py                  # Flask backend — all routes and DB logic
+├── requirements.txt        # Python dependencies
+├── Procfile                # Gunicorn config for Render/Heroku
+├── .env.example            # Environment variable template
+├── .gitignore
 ├── static/
-│   ├── style.css       # Custom styles
-│   └── images/         # Uploaded images & default placeholders
-└── templates/          # Glassmorphism HTML UI Components
-    ├── base.html       # Global Layout
-    ├── login.html      # Authentication
-    ├── market.html     # The Exchange
-    ├── lost.html       # Lost & Found reporting
-    ├── index.html      # Mediator Dashboard / Home
-    └── ...             # Detail & Dashboard pages
+│   ├── style.css
+│   └── images/             # User uploads + default.png
+└── templates/
+    ├── base.html           # Layout with nav + footer
+    ├── login.html          # Email login
+    ├── index.html          # Home + admin oversight panel
+    ├── market_choice.html  # Buyer / Seller / Lost & Found picker
+    ├── verification_vault.html  # Identity verification form
+    ├── pending_approval.html    # Waiting for admin approval
+    ├── market.html         # Marketplace listings grid
+    ├── list_item.html      # Seller: add new listing
+    ├── listing_detail.html # Individual listing page
+    ├── seller_dash.html    # Seller dashboard
+    ├── seller_profile.html # Public seller profile
+    ├── lost.html           # Lost & found board
+    ├── admin_login.html    # Admin login
+    ├── admin.html          # Admin verification table
+    └── admin_items.html    # Admin item management
 ```
+
+## License
+
+MIT
