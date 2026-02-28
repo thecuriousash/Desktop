@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <div class="mb-10">
+        <h1 class="brand text-4xl font-black text-white italic">Add New Product.</h1>
+        <p class="text-slate-500">Your listing will be visible to all students instantly.</p>
+    </div>
+
+    <form action="/market" method="POST" enctype="multipart/form-data" class="glass p-10 rounded-[40px] space-y-8">
+        <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-2">What are you selling?</label>
+            <input type="text" name="title" placeholder="e.g. iPad Pro M2 (2024)" required 
+                   class="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-indigo-500 outline-none transition-all">
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-2">Price (₹)</label>
+                <input type="number" name="price" placeholder="45000" required 
+                       class="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-indigo-500 outline-none">
+            </div>
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-2">Quantity</label>
+                <input type="number" name="quantity" value="1" 
+                       class="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-indigo-500 outline-none">
+            </div>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-2">WhatsApp Contact</label>
+            <input type="text" name="whatsapp" placeholder="91XXXXXXXXXX" required 
+                   class="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-indigo-500 outline-none">
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-2">Product Photo</label>
+            <div class="glass border-dashed border-white/10 rounded-2xl p-8 text-center hover:border-indigo-500/50 transition-all cursor-pointer relative">
+                <input type="file" name="image" class="absolute inset-0 opacity-0 cursor-pointer">
+                <span class="text-slate-500 text-sm">Tap to upload high-res image</span>
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-black py-5 rounded-3xl transition-all shadow-2xl shadow-indigo-500/20 uppercase tracking-[0.2em] text-xs">
+            Publish Listing
+        </button>
+    </form>
+</div>
+{% endblock %}

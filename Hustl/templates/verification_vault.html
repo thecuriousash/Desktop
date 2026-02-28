@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto animate-page">
+    <div class="text-center mb-10">
+        <h1 class="brand text-4xl font-black text-white italic">Identity Vault.</h1>
+        <p class="text-slate-500 text-sm mt-2 font-light tracking-widest uppercase">Securing your {{ user_type }} Profile</p>
+    </div>
+
+    <form action="/submit-vault" method="POST" class="glass p-10 rounded-[40px] space-y-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-indigo-400 uppercase tracking-widest ml-4">Full Legal Name</label>
+                <input type="text" name="legal_name" required 
+                       class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-indigo-500 transition-all">
+            </div>
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-indigo-400 uppercase tracking-widest ml-4">
+                    {% if user_type == 'seller' %}Brand / Shop Name{% else %}Public Display Name{% endif %}
+                </label>
+                <input type="text" name="display_name" required 
+                       class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-indigo-500 transition-all">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-4">College Reg No.</label>
+                <input type="text" name="reg_number" required 
+                       class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-indigo-500 transition-all">
+            </div>
+            <div class="space-y-2">
+                <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-4">WhatsApp No.</label>
+                <input type="text" name="whatsapp" placeholder="91..." required 
+                       class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-indigo-500 transition-all">
+            </div>
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-4">ID Proof (Drive Link)</label>
+            <input type="url" name="id_proof_link" placeholder="https://drive.google.com/..." required 
+                   class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-indigo-500 transition-all">
+        </div>
+
+        <div class="space-y-2">
+            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-4">Social / LinkedIn Link</label>
+            <input type="url" name="social_link" placeholder="Verify student status" required 
+                   class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-indigo-500 transition-all">
+        </div>
+
+        <button type="submit" class="w-full bg-indigo-600 text-white font-black py-5 rounded-2xl hover:bg-white hover:text-black transition-all uppercase tracking-[0.2em] text-xs shadow-xl shadow-indigo-500/20">
+            Submit for Mediator Review
+        </button>
+    </form>
+</div>
+{% endblock %}
