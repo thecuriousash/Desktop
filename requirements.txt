@@ -7,7 +7,7 @@ Jinja2==3.1.6
 MarkupSafe==3.0.3
 packaging==26.0
 Werkzeug==3.1.6
-
+supabase==2.28.0
 # Optional production dependencies
 psycopg2-binary>=2.9.6
 flask-wtf==1.1.1
