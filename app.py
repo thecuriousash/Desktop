@@ -132,9 +132,6 @@ def get_image_url(filename):
 def utility_processor():
     return dict(get_image_url=get_image_url)
 
-# --- HELPER:# Create tables on startup
-init_db()
-
 # --- AUTH HELPERS ---
 def get_current_user():
     """Return the current user row or None."""

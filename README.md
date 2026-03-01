@@ -61,6 +61,9 @@ Copy `.env.example` to `.env` and configure:
   - Ensure `DATABASE_URL` is set in Render's environment variables
   - Verify the PostgreSQL endpoint is reachable from Render (may require IPv4 enforcement)
   - Check Supabase network rules allow inbound connections
+
+## Project Structure
+```
 README.md               # This file
 ├── .env.example            # Environment variable template
 ├── .gitignore
