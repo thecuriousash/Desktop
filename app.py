@@ -109,7 +109,11 @@ def init_db():
     finally:
         conn.close()
 
-init_db()
+# Initialize database with error handling - don't crash deployment if DB is unreachable
+try:
+    init_db()
+except Exception as e:
+    logging.error(f"Failed to initialize database at startup: {e}. The app will continue but database operations may fail until the issue is resolved.")
 
 # --- HELPER: get public storage URL ---
 def get_image_url(filename):
