@@ -138,40 +138,54 @@ def get_current_user():
     email = session.get('email')
     if not email:
         return None
-    conn = get_db_connection()
     try:
-        user = safe_execute(conn, 'SELECT * FROM users WHERE email = %s', (email,), fetchone=True)
-        return user
-    finally:
-        conn.close()
+        conn = get_db_connection()
+        try:
+            user = safe_execute(conn, 'SELECT * FROM users WHERE email = %s', (email,), fetchone=True)
+            return user
+        finally:
+            conn.close()
+    except Exception as e:
+        logging.error(f"Database error in get_current_user: {e}")
+        return None
 
 
 # --- ROUTES ---
 
+# Health check endpoint - doesn't require database
+@app.route("/health")
+def health():
+    return {"status": "ok"}, 200
+
 @app.route("/")
 def index():
     user = get_current_user()
-    conn = get_db_connection()
     market_items = []
     lost_items = []
     try:
-        market_items = safe_execute(
-            conn,
-            '''SELECT market_items.*, 
-                      COALESCE(users.display_name, market_items.seller_brand, users.email, 'Campus Seller') AS seller_display
-               FROM market_items
-               LEFT JOIN users ON market_items.user_id = users.id
-               WHERE market_items.is_sold = 0
-               ORDER BY market_items.id DESC LIMIT 8''',
-            fetchall=True
-        ) or []
-        lost_items = safe_execute(
-            conn,
-            'SELECT * FROM lost_items ORDER BY id DESC LIMIT 4',
-            fetchall=True
-        ) or []
-    finally:
-        conn.close()
+        conn = get_db_connection()
+        try:
+            market_items = safe_execute(
+                conn,
+                '''SELECT market_items.*, 
+                          COALESCE(users.display_name, market_items.seller_brand, users.email, 'Campus Seller') AS seller_display
+                   FROM market_items
+                   LEFT JOIN users ON market_items.user_id = users.id
+                   WHERE market_items.is_sold = 0
+                   ORDER BY market_items.id DESC LIMIT 8''',
+                fetchall=True
+            ) or []
+            lost_items = safe_execute(
+                conn,
+                'SELECT * FROM lost_items ORDER BY id DESC LIMIT 4',
+                fetchall=True
+            ) or []
+        finally:
+            conn.close()
+    except Exception as e:
+        logging.error(f"Database error in index route: {e}")
+        market_items = []
+        lost_items = []
     return render_template("index.html", user=user, market_items=market_items, lost_items=lost_items)
 
 
