@@ -1,23 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="max-w-md mx-auto py-24 animate-page">
+<div class="max-w-md mx-auto mt-24 animate-up">
     <div class="text-center mb-10">
-        <h1 class="brand text-3xl font-black text-white italic tracking-tighter uppercase">Mediator Portal</h1>
-        <p class="text-slate-600 text-[10px] mt-2 font-black uppercase tracking-[0.3em]">Credentials Required</p>
+        <h1 class="font-brand text-5xl font-bold italic tracking-tighter mb-2">Mediator Access.</h1>
+        <p class="text-slate-500 text-sm italic">Authorized personnel only.</p>
     </div>
 
-    <form action="/admin-login" method="POST" class="glass-card p-10 rounded-[40px] border-red-500/20 space-y-6">
-        <div>
-            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-4">Username</label>
-            <input type="text" name="username" required class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-red-500 transition-all">
-        </div>
-        <div>
-            <label class="text-[10px] font-black text-slate-500 uppercase tracking-widest ml-4">Secret Code</label>
-            <input type="password" name="password" required class="w-full bg-white/5 border border-white/10 px-6 py-4 rounded-2xl text-white outline-none focus:border-red-500 transition-all">
-        </div>
-        <button type="submit" class="w-full bg-red-600 text-white font-black py-5 rounded-2xl hover:bg-white hover:text-black transition-all uppercase tracking-widest text-xs">
-            Unlock Oversight
-        </button>
-    </form>
+    <div class="glass p-12 rounded-[48px] shadow-2xl relative">
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-purple-500/10 blur-[90px]"></div>
+
+        <form action="/admin-login" method="POST" class="space-y-8 relative z-10">
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Admin
+                    Username</label>
+                <input type="text" name="username" required placeholder="admin"
+                    class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-purple-500 transition-all">
+            </div>
+
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Secure
+                    Password</label>
+                <input type="password" name="password" required placeholder="••••••••"
+                    class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-purple-500 transition-all">
+            </div>
+
+            <button type="submit"
+                class="w-full bg-purple-600 hover:bg-purple-500 text-white py-6 rounded-3xl font-bold text-xs uppercase tracking-widest shadow-2xl mt-4">
+                Enter Dashboard
+            </button>
+        </form>
+    </div>
+
+    <div class="mt-8 text-center text-sm">
+        <a href="/"
+            class="text-slate-600 font-bold hover:text-white transition-colors text-[10px] uppercase tracking-widest">&larr;
+            Return to Market</a>
+    </div>
 </div>
 {% endblock %}

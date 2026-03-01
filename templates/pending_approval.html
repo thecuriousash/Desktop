@@ -1,21 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="min-h-[70vh] flex flex-col items-center justify-center animate-page text-center">
-    <div class="relative mb-12">
-        <div class="w-24 h-24 border-[3px] border-indigo-500/10 border-t-indigo-500 rounded-full animate-spin"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-            <span class="text-[10px] font-black text-indigo-500 animate-pulse uppercase tracking-widest">Vetting</span>
+<div class="max-w-2xl mx-auto mt-24 text-center animate-up">
+    <div class="mb-12 relative inline-block">
+        <div class="absolute inset-0 bg-indigo-500/20 blur-[60px] rounded-full"></div>
+        <div
+            class="w-24 h-24 rounded-full bg-slate-900 border border-white/5 flex items-center justify-center mx-auto relative z-10">
+            <svg class="w-10 h-10 text-indigo-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
         </div>
     </div>
-    
-    <h2 class="brand-logo text-5xl text-white italic mb-6">Authorization Pending</h2>
-    <p class="text-slate-500 text-[11px] uppercase tracking-[0.8em] max-w-lg leading-loose opacity-60">
-        The Mediator is currently reviewing your identity vault. You will be granted full access to the exchange once verification is complete.
+
+    <h1 class="font-brand text-5xl font-bold italic tracking-tighter mb-6">Awaiting Access.</h1>
+    <p class="text-slate-400 text-lg mb-12 max-w-md mx-auto leading-relaxed">
+        Your seller verification is currently under review by the campus administrators. We'll update your status as
+        soon as everything checks out.
     </p>
-    
-    <div class="mt-16 border-t border-white/5 pt-8 w-full max-w-xs mx-auto">
-        <p class="text-[8px] text-slate-700 font-bold uppercase tracking-widest">Status: ID_SUBMITTED_LOCKED</p>
-        <a href="/" class="mt-6 inline-block text-[9px] font-black text-slate-500 uppercase tracking-widest hover:text-white transition-all">&larr; Return to Terminal</a>
+
+    <div class="space-y-6">
+        <a href="/market"
+            class="inline-block px-10 py-4 glass rounded-full font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all">
+            Return to Market
+        </a>
+        <p class="text-[9px] text-slate-600 font-bold uppercase tracking-[0.5em] block">Average Wait: 2-4 Hours</p>
     </div>
 </div>
 {% endblock %}

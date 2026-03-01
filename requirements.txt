@@ -9,5 +9,6 @@ packaging==26.0
 Werkzeug==3.1.6
 
 # Optional production dependencies
-psycopg2-binary==2.9.6
+psycopg2-binary>=2.9.6
 flask-wtf==1.1.1
+python-dotenv==1.2.1

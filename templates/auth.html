@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-md mx-auto mt-12 animate-up">
+    <div class="text-center mb-10">
+        <h1 class="font-brand text-5xl font-bold italic tracking-tighter mb-2">
+            {% if is_login %}Welcome Back.{% else %}Join the Club.{% endif %}
+        </h1>
+        <p class="text-slate-500 text-sm">
+            {% if is_login %}Enter your credentials to access the market.{% else %}Create an account to start buying and
+            selling.{% endif %}
+        </p>
+    </div>
+
+    <div class="glass p-10 rounded-[40px] shadow-2xl relative overflow-hidden">
+        <!-- Glow effect -->
+        <div class="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/20 blur-[80px]"></div>
+
+        <form action="{% if is_login %}/login{% else %}/signup{% endif %}" method="POST"
+            class="space-y-6 relative z-10">
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Campus Email</label>
+                <input type="email" name="email" required placeholder="name@campus.edu"
+                    class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all mt-1">
+            </div>
+
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Password</label>
+                <input type="password" name="password" required placeholder="••••••••"
+                    class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all mt-1">
+            </div>
+
+            {% if not is_login %}
+            <div>
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Confirm
+                    Password</label>
+                <input type="password" name="confirm_password" required placeholder="••••••••"
+                    class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all mt-1">
+            </div>
+            {% endif %}
+
+            <button type="submit"
+                class="w-full btn-primary py-5 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl mt-4">
+                {% if is_login %}Sign In{% else %}Create Account{% endif %}
+            </button>
+        </form>
+    </div>
+
+    <div class="mt-8 text-center text-sm">
+        <span class="text-slate-500">
+            {% if is_login %}Don't have an account?{% else %}Already have an account?{% endif %}
+        </span>
+        <a href="{% if is_login %}/signup{% else %}/login{% endif %}"
+            class="text-indigo-400 font-bold ml-1 hover:text-indigo-300 transition-colors">
+            {% if is_login %}Sign Up{% else %}Log In{% endif %}
+        </a>
+    </div>
+</div>
+{% endblock %}

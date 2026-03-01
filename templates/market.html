@@ -1,61 +1,91 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="animate-page">
-    <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+<div class="animate-up">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
-            <div class="flex items-center gap-3 mb-4">
-                <span class="w-2 h-2 bg-indigo-500 rounded-full shadow-[0_0_10px_rgba(99,102,241,0.8)]"></span>
-                <h2 class="brand-logo text-4xl text-white italic tracking-tighter">Market Exchange</h2>
-            </div>
-            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.6em]">Authorized Asset Circulation</p>
+            <h1 class="font-brand text-5xl font-bold italic tracking-tighter mb-2">Campus Market.</h1>
+            <p class="text-slate-500 text-sm italic">Verified student deals only.</p>
         </div>
 
         <div class="flex items-center gap-4">
-            {% if user_type == 'seller' %}
-            <a href="/seller-dash"
-                class="glass-card px-6 py-3 rounded-2xl border-white/5 hover:border-purple-500/30 transition-all">
-                <span class="text-[9px] font-black text-purple-400 uppercase tracking-widest">My Dashboard</span>
-            </a>
-            <a href="/list-item"
-                class="bg-indigo-600 text-white px-6 py-3 rounded-2xl text-[9px] font-black uppercase tracking-widest hover:bg-white hover:text-black transition-all">
-                + New Listing
+            {% if user and user.user_type == 'seller' and user.is_verified == 1 %}
+            <button onclick="toggleModal('productFormModal')"
+                class="btn-primary px-8 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-lg">
+                + List Product
+            </button>
+            {% else %}
+            <a href="/seller-onboarding"
+                class="glass px-8 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest text-indigo-400 hover:bg-indigo-500/10 transition-all">
+                Start Selling &rarr;
             </a>
             {% endif %}
-            <div class="glass-card px-6 py-3 rounded-2xl border-white/5">
-                <span class="text-[9px] font-black text-slate-500 uppercase tracking-widest">Active Listings:</span>
-                <span class="text-xs text-white font-bold ml-2">{{ items|length }}</span>
-            </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <!-- Filters placeholder -->
+    <div class="mb-10 flex gap-4 overflow-x-auto pb-4 no-scrollbar">
+        <button
+            class="glass px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest bg-indigo-500/20 text-white border-indigo-500/50">All</button>
+        <button
+            class="glass px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-all">Tech</button>
+        <button
+            class="glass px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-all">Books</button>
+        <button
+            class="glass px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-all">Fashion</button>
+        <button
+            class="glass px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-white transition-all">Home</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {% for item in items %}
-        <div
-            class="glass-card group rounded-[45px] overflow-hidden border-white/5 hover:border-indigo-500/30 transition-all duration-700">
-            <div class="h-72 bg-slate-900 relative overflow-hidden">
-                <img src="{{ url_for('static', filename='images/' ~ item['image']) }}"
-                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80 group-hover:opacity-100">
+        <div class="glass-card rounded-[32px] overflow-hidden group">
+            <div class="aspect-square bg-slate-900 relative overflow-hidden">
+                <img src="{{ get_image_url(item.image) }}" alt="{{ item.title }}"
+                    class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 <div
-                    class="absolute top-6 left-6 bg-black/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
-                    <span class="text-[9px] font-black text-white uppercase tracking-widest">₹ {{ item['price']
-                        }}</span>
+                    class="absolute top-4 right-4 bg-indigo-600/90 text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">
+                    ₹{{ item.price }}
+                </div>
+                {% if item.is_sold == 1 %}
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
+                    <span
+                        class="font-brand text-2xl font-bold italic text-white/50 tracking-widest uppercase -rotate-12 border-4 border-white/20 px-4 py-2">SOLD</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-2">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{{ item.brand or 'Campus
+                        Item' }}</p>
+                    {% if item.is_verified == 1 %}
+                    <span class="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]"></span>
+                    {% endif %}
+                </div>
+                <h3 class="font-bold text-lg leading-tight mb-4 group-hover:text-indigo-400 transition-colors">{{
+                    item.title }}</h3>
+
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-[10px] text-slate-400 italic">Seller</p>
+                        <p class="text-xs font-bold">{{ item.seller_display }}</p>
+                    </div>
+                    <a href="/listing/{{ item.id }}"
+                        class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-indigo-600 transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                    </a>
                 </div>
             </div>
-
-            <div class="p-10">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 class="brand-logo text-2xl text-white italic tracking-tight">{{ item['title'] }}</h3>
-                    <div class="text-[8px] font-black text-indigo-400 bg-indigo-500/10 px-2 py-1 rounded">VETTED</div>
-                </div>
-
-                <p class="text-[10px] text-slate-500 uppercase font-black tracking-[0.2em] mb-8">Provider: {{
-                    item['seller_brand'] }}</p>
-
-                <a href="https://wa.me/{{ item['whatsapp'] }}" target="_blank"
-                    class="block w-full bg-white text-black text-center font-black py-4 rounded-2xl text-[10px] uppercase tracking-[0.3em] hover:bg-indigo-500 hover:text-white transition-all shadow-xl shadow-white/5">
-                    Initialize Deal
-                </a>
-            </div>
+        </div>
+        {% else %}
+        <div class="col-span-full glass p-20 rounded-[40px] text-center">
+            <p class="text-slate-500 italic mb-6">Nothing for sale right now.</p>
+            <button onclick="toggleModal('productFormModal')"
+                class="btn-primary px-8 py-4 rounded-2xl font-bold text-xs uppercase tracking-widest">Start the
+                Economy</button>
         </div>
         {% endfor %}
     </div>

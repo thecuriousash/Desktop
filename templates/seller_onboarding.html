@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto mt-12 animate-up">
+    <div class="mb-12 text-center">
+        <h1 class="font-brand text-5xl font-bold italic tracking-tighter mb-4">Start Selling.</h1>
+        <p class="text-slate-500 text-sm">Verify your student identity to list items on the HUSTL marketplace.</p>
+    </div>
+
+    <div class="glass p-12 rounded-[48px] shadow-2xl relative">
+        <div class="absolute -top-32 -left-32 w-64 h-64 bg-indigo-500/10 blur-[100px]"></div>
+
+        <form action="/seller-onboarding" method="POST" class="space-y-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Legal
+                        Name</label>
+                    <input type="text" name="legal_name" required placeholder="Full Name as per ID"
+                        class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Shop Display
+                        Name</label>
+                    <input type="text" name="display_name" required placeholder="e.g., Alex's Tech Garage"
+                        class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Student Reg
+                        No</label>
+                    <input type="text" name="reg_number" required placeholder="2024CS000..."
+                        class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all">
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">WhatsApp
+                        Contact</label>
+                    <input type="text" name="whatsapp" required placeholder="91XXXXXXXXXX"
+                        class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all">
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">ID Proof (Google
+                    Drive / Imgur Link)</label>
+                <input type="url" name="id_proof_link" required placeholder="https://..."
+                    class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all">
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Social Proof
+                    (LinkedIn / Instagram / GitHub)</label>
+                <input type="url" name="social_link" placeholder="optional but recommended"
+                    class="w-full bg-slate-900 border border-white/5 rounded-2xl px-6 py-4 text-sm outline-none focus:border-indigo-500 transition-all">
+            </div>
+
+            <button type="submit"
+                class="w-full btn-primary py-6 rounded-3xl font-bold text-xs uppercase tracking-widest shadow-2xl mt-4">
+                Verify My Profile
+            </button>
+        </form>
+    </div>
+
+    <div class="mt-12 glass p-6 rounded-3xl border-indigo-500/10 text-center">
+        <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-loose">
+            Verification typically takes 2-4 campus hours. Once approved, <br>your listings will appear with a "Verified
+            Student" badge.
+        </p>
+    </div>
+</div>
+{% endblock %}

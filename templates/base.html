@@ -4,68 +4,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUSTL. | Campus Mini-Economy</title>
+    <title>HUSTL. | Campus Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@900&family=Inter:wght@300;400;600;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@700&display=swap"
         rel="stylesheet">
 
     <style>
         :root {
-            --bg: #020617;
+            --bg: #050816;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.5);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
         body {
             background-color: var(--bg);
-            background-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(245, 158, 11, 0.03) 0px, transparent 50%);
-            font-family: 'Inter', sans-serif;
+            background-image:
+                radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(168, 85, 247, 0.1) 0%, transparent 40%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
             color: #f8fafc;
             margin: 0;
             overflow-x: hidden;
         }
 
-        .brand-logo {
+        .font-brand {
             font-family: 'Space Grotesk', sans-serif;
-            font-weight: 900;
-            font-style: italic;
-            letter-spacing: -0.06em;
-            text-transform: uppercase;
         }
 
-        .glass-nav {
-            background: rgba(2, 6, 23, 0.7);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .glass-card,
         .glass {
-            background: rgba(255, 255, 255, 0.015);
-            backdrop-filter: blur(15px);
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .brand {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 900;
-            font-style: italic;
-            letter-spacing: -0.06em;
-            text-transform: uppercase;
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
         }
 
-        .animate-fade {
-            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .neon-text {
+            text-shadow: 0 0 10px var(--accent-glow);
         }
 
-        .animate-page {
-            animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        .neon-border {
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-up {
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes slideUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
 
             to {
@@ -73,45 +114,265 @@
                 transform: translateY(0);
             }
         }
+
+        /* Hide scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
     </style>
 </head>
 
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen">
 
-    <nav class="glass-nav sticky top-0 z-50 px-8 py-5">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <a href="/" class="brand-logo text-3xl text-white tracking-tighter">
-                Hustl<span class="text-indigo-500">.</span>
+    <!-- Nav -->
+    <nav
+        class="glass sticky top-4 z-50 mx-4 mt-4 px-6 py-3 rounded-2xl flex items-center justify-between transition-all duration-300">
+        <div class="flex items-center gap-8">
+            <a href="/" class="font-brand text-2xl font-bold italic tracking-tighter neon-text">
+                HUSTL<span class="text-indigo-500">.</span>
             </a>
 
-            <div class="flex items-center gap-10">
-                <div class="hidden md:flex gap-8 text-[10px] font-black uppercase tracking-[0.4em]">
-                    <a href="/market" class="hover:text-indigo-400 transition-colors">Market</a>
-                    <a href="/lost" class="hover:text-amber-400 transition-colors">Lost & Found</a>
-                </div>
-
-                {% if session.get('email') or session.get('is_admin') %}
-                <a href="/logout"
-                    class="text-[9px] font-black uppercase text-slate-500 hover:text-white transition-all">Exit</a>
-                {% else %}
-                <a href="/login"
-                    class="bg-white text-black px-8 py-2.5 rounded-full text-[9px] font-black uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all">Initialize</a>
-                {% endif %}
+            <div class="hidden lg:flex items-center gap-6 text-sm font-semibold text-slate-400">
+                <a href="/market" class="hover:text-white transition-colors">Marketplace</a>
+                <a href="/lost" class="hover:text-white transition-colors">Lost & Found</a>
             </div>
+        </div>
+
+        <div class="flex-grow max-w-md mx-8 hidden sm:block">
+            <div class="relative group">
+                <input type="text" placeholder="Search campus..."
+                    class="w-full bg-slate-900/50 border border-white/5 rounded-full px-6 py-2 text-sm outline-none focus:border-indigo-500/50 transition-all">
+                <div class="absolute right-4 top-2.5 text-slate-500">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+            {% if session.get('email') %}
+            <div class="flex items-center gap-3">
+                {% if session.get('is_admin') %}
+                <a href="/admin"
+                    class="text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors uppercase tracking-widest hidden md:block border-r border-white/10 pr-4 mr-2">
+                    Admin Hub
+                </a>
+                {% endif %}
+                <div
+                    class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 border border-white/10 flex items-center justify-center text-[10px] font-black uppercase shadow-lg shadow-indigo-500/20">
+                    {{ session.get('email')[0] }}
+                </div>
+                <a href="/logout"
+                    class="text-xs font-bold text-red-500/70 hover:text-red-500 transition-colors uppercase tracking-tighter">Exit</a>
+            </div>
+            {% else %}
+            <a href="/login"
+                class="btn-primary px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest">Login</a>
+            {% endif %}
         </div>
     </nav>
 
-    <main class="relative z-10 flex-grow w-full max-w-7xl mx-auto px-8 py-12">
+    <!-- Main Content -->
+    <main class="w-full max-w-7xl mx-auto px-6 py-12">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div
+            class="animate-up mb-8 glass p-4 rounded-xl border-l-4 {% if category == 'error' %}border-red-500 bg-red-500/10{% else %}border-indigo-500 bg-indigo-500/10{% endif %} flex items-center gap-3">
+            <span class="text-sm font-medium">{{ message }}</span>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="py-16 px-8 border-t border-white/5 text-center">
-        <p class="brand-logo text-[9px] text-slate-800 tracking-[1.2em] mb-6">Hustl. Campus Protocol</p>
-        <a href="/admin-login"
-            class="text-[8px] text-slate-900 hover:text-indigo-500 uppercase tracking-[0.6em] transition-all">Mediator
-            Auth</a>
+    <!-- Floating Action Button -->
+    {% if session.get('email') %}
+    <button onclick="toggleModal('mainActionModal')"
+        class="fixed bottom-8 right-8 w-14 h-14 btn-primary rounded-full shadow-2xl flex items-center justify-center text-white z-40 hover:rotate-90 transition-transform duration-300">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4" />
+        </svg>
+    </button>
+    {% endif %}
+
+    <!-- Global Modals -->
+    <div id="mainActionModal" class="modal transition-all duration-300">
+        <div class="glass p-8 rounded-[32px] w-full max-w-md animate-up shadow-2xl relative">
+            <button onclick="toggleModal('mainActionModal')"
+                class="absolute top-6 right-6 text-slate-500 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            <h2 class="font-brand text-2xl font-bold italic mb-6">Create Post</h2>
+            <div class="space-y-4">
+                <button onclick="openForm('product')"
+                    class="w-full glass-card p-6 rounded-2xl flex items-center gap-4 group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                        </svg>
+                    </div>
+                    <div class="text-left">
+                        <p class="font-bold text-sm">Sell Something</p>
+                        <p class="text-xs text-slate-500 italic">List a gadget, book, or gear</p>
+                    </div>
+                </button>
+
+                <button onclick="openForm('lost')"
+                    class="w-full glass-card p-6 rounded-2xl flex items-center gap-4 group">
+                    <div
+                        class="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400 group-hover:bg-amber-500 group-hover:text-white transition-all">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                    <div class="text-left">
+                        <p class="font-bold text-sm">Report Lost Item</p>
+                        <p class="text-xs text-slate-500 italic">Help return an item to its owner</p>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productFormModal" class="modal">
+        <div
+            class="glass p-8 rounded-[32px] w-full max-w-lg animate-up shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleModal('productFormModal')"
+                class="absolute top-6 right-6 text-slate-500 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h2 class="font-brand text-2xl font-bold italic mb-6">List New Product</h2>
+            <form action="/market" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Title</label>
+                    <input type="text" name="title" required placeholder="What are you selling?"
+                        class="w-full bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-sm outline-none focus:border-indigo-500 mt-1">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Price
+                            (₹)</label>
+                        <input type="number" name="price" required placeholder="500"
+                            class="w-full bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-sm outline-none focus:border-indigo-500 mt-1">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">WhatsApp
+                            No</label>
+                        <input type="text" name="whatsapp" required placeholder="91..."
+                            class="w-full bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-sm outline-none focus:border-indigo-500 mt-1">
+                    </div>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Photo</label>
+                    <input type="file" name="image" required
+                        class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20 mt-1">
+                </div>
+                <button type="submit"
+                    class="w-full btn-primary py-4 rounded-xl font-bold text-xs uppercase tracking-widest shadow-xl">Post
+                    to Market</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lost Item Modal -->
+    <div id="lostFormModal" class="modal">
+        <div
+            class="glass p-8 rounded-[32px] w-full max-w-lg animate-up shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleModal('lostFormModal')"
+                class="absolute top-6 right-6 text-slate-500 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h2 class="font-brand text-2xl font-bold italic mb-6 text-amber-500">Report Found Item</h2>
+            <form action="/lost" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Item Name</label>
+                    <input type="text" name="title" required placeholder="e.g., Keys, Wallet"
+                        class="w-full bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500 mt-1">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Location
+                        Found</label>
+                    <input type="text" name="location" required placeholder="Where did you find it?"
+                        class="w-full bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500 mt-1">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Current
+                        Custody</label>
+                    <input type="text" name="custody" required placeholder="Who has it now? (e.g., You, Guard Desk)"
+                        class="w-full bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500 mt-1">
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Details</label>
+                    <textarea name="description" placeholder="Any specific details?" rows="3"
+                        class="w-full bg-slate-900 border border-white/5 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500 mt-1"></textarea>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Photo
+                        (Optional)</label>
+                    <input type="file" name="image"
+                        class="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-amber-500/10 file:text-amber-400 hover:file:bg-amber-500/20 mt-1">
+                </div>
+                <button type="submit"
+                    class="w-full bg-amber-500 hover:bg-amber-400 py-4 rounded-xl font-bold text-xs uppercase tracking-widest text-black shadow-xl">Submit
+                    Report</button>
+            </form>
+        </div>
+    </div>
+
+    <footer class="py-20 px-6 mt-12 border-t border-white/5 text-center">
+        <a href="/"
+            class="font-brand text-2xl font-bold italic tracking-tighter opacity-20 hover:opacity-100 transition-opacity">HUSTL.</a>
+        <div class="mt-4 flex flex-col items-center gap-4">
+            <p class="text-[10px] text-slate-600 uppercase tracking-[0.5em] font-bold">&copy; 2026 Campus Commerce</p>
+            {% if not session.get('is_admin') %}
+            <a href="/admin-login"
+                class="text-[8px] text-slate-800 hover:text-indigo-500 uppercase tracking-[0.6em] transition-all font-bold">Mediator
+                Portal</a>
+            {% endif %}
+        </div>
     </footer>
 
+    <script>
+        function toggleModal(id) {
+            const m = document.getElementById(id);
+            if (m) m.classList.toggle('active');
+        }
+
+        function openForm(type) {
+            toggleModal('mainActionModal');
+            if (type === 'product') toggleModal('productFormModal');
+            if (type === 'lost') toggleModal('lostFormModal');
+        }
+
+        // Close modal on click outside
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="animate-up">
+    <div class="mb-12 flex items-center justify-between">
+        <div>
+            <h1 class="font-brand text-4xl font-bold italic tracking-tighter mb-1">Market Moderation.</h1>
+            <p class="text-slate-500 text-sm">Delete prohibited or sold-out items.</p>
+        </div>
+        <a href="/admin"
+            class="text-xs font-bold text-slate-500 hover:text-white transition-all uppercase tracking-widest">&larr;
+            Back to Hub</a>
+    </div>
+
+    <div class="glass rounded-[40px] p-10 overflow-hidden">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="text-[10px] uppercase tracking-widest text-slate-500 border-b border-white/5">
+                    <th class="pb-4">Product Info</th>
+                    <th class="pb-4">Seller</th>
+                    <th class="pb-4">Price</th>
+                    <th class="pb-4 text-right">Action</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                {% for item in items %}
+                <tr>
+                    <td class="py-6">
+                        <div class="flex items-center gap-4">
+                            <img src="{{ get_image_url(item.image) }}"
+                                class="w-12 h-12 rounded-lg object-cover bg-slate-900 border border-white/10">
+                            <div>
+                                <p class="font-bold text-sm leading-tight">{{ item.title }}</p>
+                                <p class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{{ item.brand
+                                    or 'Generic' }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-6">
+                        <p class="text-sm font-bold text-slate-300">{{ item.user_display or 'Unknown' }}</p>
+                        <p class="text-[10px] text-slate-500 uppercase">{{ item.legal_name or 'Unverified' }}</p>
+                    </td>
+                    <td class="py-6 text-sm font-bold text-indigo-400">₹{{ item.price }}</td>
+                    <td class="py-6 text-right">
+                        <a href="/admin/delete-item/{{ item.id }}"
+                            onclick="return confirm('Are you sure you want to delete this listing?')"
+                            class="bg-red-500/10 text-red-500 px-4 py-2 rounded-lg text-[10px] font-bold uppercase hover:bg-red-500 hover:text-white transition-all">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
